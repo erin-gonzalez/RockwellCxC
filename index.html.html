@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erin Gonzalez, Rockwell Automation, Customer Experience Center &amp; Engagement Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rw-red:     #E4002B;
+    --rw-red-deep:#A6001F;
+    --rw-ink:     #101216;
+    --rw-navy:    #14171D;
+    --ink:        #14171D;
+    --ink-mid:    #4B5563;
+    --ink-muted:  #8993A4;
+    --rule:       #E2E5EA;
+    --cream:      #F7F7F8;
+    --white:      #FFFFFF;
+    --card-bg:    #F0F1F3;
+    --green:      #0AA66E;
+    --amber:      #D97706;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    position: fixed; right: 24px; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 10px;
+    z-index: 100;
+  }
+  .nav-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(16,18,22,0.16);
+    cursor: pointer; border: none; padding: 0;
+    transition: all 0.2s;
+  }
+  .nav-dot.active { background: var(--rw-red); transform: scale(1.4); }
+  .nav-dot:hover  { background: var(--rw-red-deep); }
+
+  .slide {
+    width: 100%; min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 80px 9%;
+    position: relative; overflow: hidden;
+  }
+
+  .slide-cover {
+    background: var(--rw-navy);
+    justify-content: space-between;
+    padding-top: 100px; padding-bottom: 80px;
+  }
+  .grid-overlay {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+  .cover-kicker {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--rw-red); margin-bottom: 28px;
+  }
+  .cover-headline {
+    font-size: clamp(38px, 5.2vw, 64px);
+    font-weight: 800; line-height: 1.1;
+    color: white; margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .cover-headline span { color: var(--rw-red); }
+  .cover-sub {
+    font-size: 17px; font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    max-width: 600px; line-height: 1.7;
+    margin-bottom: 44px;
+  }
+  .cover-sub strong { color: white; font-weight: 600; }
+  .cover-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500;
+    color: var(--rw-red);
+    border: 1px solid rgba(228,0,43,0.35);
+    border-radius: 6px; padding: 8px 18px;
+    margin-bottom: 72px;
+  }
+  .cover-pill::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--green); display: inline-block;
+  }
+  .cover-contact {
+    font-size: 13px; color: rgba(255,255,255,0.35);
+    display: flex; gap: 24px; flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 28px;
+  }
+  .cover-contact a { color: rgba(255,255,255,0.35); text-decoration: none; }
+
+  .slide-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--rw-red); margin-bottom: 20px;
+  }
+  .section-headline {
+    font-size: clamp(26px, 3.2vw, 42px);
+    font-weight: 800; line-height: 1.2;
+    color: var(--ink); max-width: 760px;
+    margin-bottom: 30px; letter-spacing: -0.01em;
+  }
+  .section-headline span { color: var(--rw-red); }
+  .section-sub {
+    font-size: 15px; font-weight: 400; color: var(--ink-mid);
+    max-width: 720px; line-height: 1.65; margin-bottom: 32px;
+  }
+
+  /* JD mapping grid */
+  .slide-map { background: var(--white); }
+  .map-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 980px; }
+  .map-card {
+    background: var(--cream); border-radius: 12px;
+    padding: 26px 26px; border: 1px solid var(--rule);
+    border-top: 4px solid var(--rw-red);
+  }
+  .map-jd {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--rw-red-deep); margin-bottom: 10px;
+  }
+  .map-jd-quote {
+    font-size: 13px; font-style: italic; color: var(--ink-muted);
+    line-height: 1.55; margin-bottom: 16px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .map-proof-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 8px;
+  }
+  .map-proof {
+    font-size: 14px; color: var(--ink); line-height: 1.6; font-weight: 500;
+  }
+
+  /* Twin builder story slide */
+  .slide-blueprints { background: var(--cream); }
+  .twin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1000px; margin-bottom: 24px; }
+  .twin-card { background: var(--white); border-radius: 12px; padding: 28px 28px; border: 1px solid var(--rule); }
+  .twin-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--rw-red);
+    margin-bottom: 14px;
+  }
+  .twin-title { font-size: 19px; font-weight: 700; color: var(--ink); margin-bottom: 12px; line-height: 1.3; }
+  .twin-body { font-size: 13.5px; color: var(--ink-mid); line-height: 1.65; margin-bottom: 16px; }
+  .twin-stats { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 14px; border-top: 1px solid var(--rule); }
+  .twin-stat { font-size: 11.5px; color: var(--ink); background: var(--card-bg); border-radius: 6px; padding: 6px 10px; font-weight: 600; }
+  .insight-card {
+    background: var(--rw-navy); border-radius: 12px;
+    padding: 26px 30px; max-width: 1000px;
+  }
+  .insight-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--rw-red); margin-bottom: 12px;
+  }
+  .insight-text {
+    font-size: 16px; font-weight: 400;
+    color: white; line-height: 1.65;
+  }
+  .insight-text strong { color: var(--rw-red); font-weight: 700; }
+
+  /* Live Nation elevate slide */
+  .slide-elevate { background: var(--white); }
+  .elevate-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; max-width: 1000px; align-items: start; }
+  .elevate-list { list-style: none; }
+  .elevate-item { display: flex; gap: 12px; margin-bottom: 18px; align-items: flex-start; }
+  .elevate-num { font-size: 13px; font-weight: 800; color: var(--rw-red); min-width: 22px; }
+  .elevate-text { font-size: 14.5px; color: var(--ink-mid); line-height: 1.6; }
+  .elevate-text strong { color: var(--ink); font-weight: 600; }
+  .stat-tower { background: var(--rw-navy); border-radius: 12px; padding: 30px 26px; }
+  .stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-num { font-size: 26px; font-weight: 800; color: var(--rw-red); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.55); max-width: 140px; text-align: right; line-height: 1.4; }
+
+  /* Global muscle slide */
+  .slide-global { background: var(--cream); }
+  .global-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1000px; margin-bottom: 24px; }
+  .global-card { background: var(--white); border-radius: 12px; padding: 24px 22px; border: 1px solid var(--rule); position: relative; overflow: hidden; }
+  .global-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--rw-red); }
+  .global-loc { font-size: 10px; font-weight: 700; color: var(--ink-muted); letter-spacing: 0.1em; margin-bottom: 8px; text-transform: uppercase; }
+  .global-title { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 10px; line-height: 1.3; }
+  .global-body { font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+
+  /* Gaps / exceed slide */
+  .slide-gaps { background: var(--rw-navy); }
+  .slide-gaps .slide-label { color: var(--rw-red); }
+  .gaps-headline {
+    font-size: clamp(26px, 3.2vw, 42px); font-weight: 800; color: white;
+    max-width: 760px; line-height: 1.2; margin-bottom: 12px; letter-spacing: -0.01em;
+  }
+  .gaps-headline span { color: var(--rw-red); }
+  .gaps-sub { font-size: 14.5px; font-weight: 300; color: rgba(255,255,255,0.55); max-width: 680px; line-height: 1.65; margin-bottom: 36px; }
+  .gap-stack { display: flex; flex-direction: column; gap: 14px; max-width: 980px; }
+  .gap-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 22px 26px; }
+  .gap-title { font-size: 15px; font-weight: 700; color: white; margin-bottom: 8px; }
+  .gap-title span { color: var(--rw-red); }
+  .gap-body { font-size: 13.5px; color: rgba(255,255,255,0.65); line-height: 1.65; }
+  .gap-body strong { color: white; font-weight: 600; }
+
+  /* Close slide */
+  .slide-close { background: var(--white); }
+  .close-headline {
+    font-size: clamp(26px, 3.2vw, 42px);
+    font-weight: 800; color: var(--ink);
+    max-width: 640px; line-height: 1.2; margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .close-headline span { color: var(--rw-red); }
+  .close-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 32px; max-width: 940px; margin-bottom: 40px;
+  }
+  .close-col-title {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rw-red); margin-bottom: 16px;
+  }
+  .close-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 13px; }
+  .close-dot { width: 5px; height: 5px; background: var(--amber); flex-shrink: 0; margin-top: 8px; }
+  .close-text { font-size: 14px; font-weight: 400; color: var(--ink-mid); line-height: 1.5; }
+  .close-text strong { font-weight: 600; color: var(--ink); }
+  .close-bottom { border-top: 1px solid var(--rule); padding-top: 28px; max-width: 720px; }
+  .close-quote {
+    font-size: 18px; font-weight: 500; font-style: italic;
+    color: var(--ink); line-height: 1.55; margin-bottom: 20px;
+  }
+  .close-contact { display: flex; gap: 28px; flex-wrap: wrap; }
+  .close-contact a { font-size: 13px; font-weight: 600; color: var(--rw-red); text-decoration: none; }
+  .close-contact a:hover { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .map-grid, .twin-grid, .elevate-grid, .global-grid, .close-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .nav { display: none; }
+    .slide { min-height: 100vh; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Slide navigation">
+  <button class="nav-dot active" onclick="goTo(0)" aria-label="Slide 1"></button>
+  <button class="nav-dot" onclick="goTo(1)" aria-label="Slide 2"></button>
+  <button class="nav-dot" onclick="goTo(2)" aria-label="Slide 3"></button>
+  <button class="nav-dot" onclick="goTo(3)" aria-label="Slide 4"></button>
+  <button class="nav-dot" onclick="goTo(4)" aria-label="Slide 5"></button>
+  <button class="nav-dot" onclick="goTo(5)" aria-label="Slide 6"></button>
+  <button class="nav-dot" onclick="goTo(6)" aria-label="Slide 7"></button>
+</nav>
+
+<section class="slide slide-cover" id="slide-0">
+  <div class="grid-overlay"></div>
+  <div>
+    <p class="cover-kicker">A note for the Rockwell Automation hiring team, from Erin Gonzalez</p>
+    <h1 class="cover-headline">I Design Customer Experiences.<br>Sometimes That Means <span>Building the Venue Too.</span></h1>
+    <p class="cover-sub">You are planning the grand opening of the Milwaukee CxC in Q2 FY27. For 14+ years I have built the programs, journeys, and hospitality standards that make a space like that actually work, <strong>including two ground-up venue launches where I designed the experience before the doors ever opened.</strong></p>
+    <div class="cover-pill">Leader, Customer Experience Center &amp; Engagement Strategy, Candidate Submission</div>
+  </div>
+  <div class="cover-contact">
+    <span>Erin Gonzalez</span>
+    <span>Milwaukee, WI</span>
+    <span>414-379-5966</span>
+    <a href="mailto:bichanich@uwalumni.com">bichanich@uwalumni.com</a>
+    <a href="https://linkedin.com/in/erin-gonzalez" target="_blank">linkedin.com/in/erin-gonzalez</a>
+  </div>
+</section>
+
+<section class="slide slide-map" id="slide-1">
+  <p class="slide-label">The Role's Four Pillars, Brought to Life</p>
+  <h2 class="section-headline">Four pillars in your posting.<br>Here is how I would <span>bring each one to life.</span></h2>
+  <p class="section-sub">I read the posting the way I read an account plan, pillar by pillar. Here is the language from your job description, next to the work that shapes how I would approach it.</p>
+  <div class="map-grid">
+    <div class="map-card">
+      <p class="map-jd">Pillar 01 · Experience Design &amp; Environment Strategy</p>
+      <p class="map-jd-quote">"Influence the physical environment, customer flow, storytelling, hospitality, and technology integration to create frictionless experiences."</p>
+      <p class="map-proof-label">How I'd Bring This to Life</p>
+      <p class="map-proof">Designed and sold a first-of-its-kind premium dining experience from architectural blueprints at U.S. Bank Stadium, before the venue existed, and later redesigned the physical layout and hospitality model across two Live Nation venues to elevate guest flow and unlock more revenue per event.</p>
+    </div>
+    <div class="map-card">
+      <p class="map-jd">Pillar 02 · Global Experience Standards &amp; Governance</p>
+      <p class="map-jd-quote">"Develop scalable playbooks, experience frameworks, and design principles... standardize customer journey methodologies, executive engagement practices, storytelling techniques, and hospitality standards."</p>
+      <p class="map-proof-label">How I'd Bring This to Life</p>
+      <p class="map-proof">Built a 200-event annual program from zero at SMAAASH while coordinating daily with an India headquarters, then codified it into repeatable playbooks so the team could execute consistently without adding headcount.</p>
+    </div>
+    <div class="map-card">
+      <p class="map-jd">Pillar 03 · Cross-Functional Experience Enablement</p>
+      <p class="map-jd-quote">"Ensure every customer engagement is seamlessly orchestrated, from pre-visit strategy through on-site execution and post-visit follow-up."</p>
+      <p class="map-proof-label">How I'd Bring This to Life</p>
+      <p class="map-proof">Ran executive-level quarterly business reviews and cross-functional alignment across product, operations, and client success teams inside two matrixed enterprise organizations, with zero direct authority over the people I needed to move.</p>
+    </div>
+    <div class="map-card">
+      <p class="map-jd">Pillar 04 · Experience Innovation, Insights &amp; Business Performance</p>
+      <p class="map-jd-quote">"Continuously evaluate emerging technologies... capture customer insights and feedback to continuously improve customer journeys."</p>
+      <p class="map-proof-label">How I'd Bring This to Life</p>
+      <p class="map-proof">Grew an enterprise portfolio from $7.14M to $15.71M ARR, a 120% increase, using data-driven QBR storytelling that senior stakeholders trusted enough to renew and expand on. I already use AI daily to research, personalize, and move faster.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-blueprints" id="slide-2">
+  <p class="slide-label">Programs Built From Nothing, Inside Two Different Venues</p>
+  <h2 class="section-headline">I design the experience.<br>Sometimes I build the <span>venue around it.</span></h2>
+  <div class="twin-grid">
+    <div class="twin-card">
+      <span class="twin-tag">Aramark, U.S. Bank Stadium</span>
+      <h3 class="twin-title">Designed a premium dining experience that had never been attempted in a professional stadium</h3>
+      <p class="twin-body">I joined while the stadium was still under construction and learned the building from blueprints. I pitched the Minnesota Vikings and MN Sports Authority on a first-of-its-kind all-inclusive coursed suite dining experience, then designed the menu architecture, ordering systems, SOPs, and service frameworks that ran it, building the entire guest experience before I could ever walk the finished space.</p>
+      <div class="twin-stats">
+        <span class="twin-stat">150+ direct reports, full HR authority</span>
+        <span class="twin-stat">200+ corporate clients</span>
+        <span class="twin-stat">NFL venue</span>
+      </div>
+    </div>
+    <div class="twin-card">
+      <span class="twin-tag">SMAAASH Entertainment</span>
+      <h3 class="twin-title">Built an entire experience program from zero, for a flagship U.S. location headquartered a world away</h3>
+      <p class="twin-body">SMAAASH is headquartered in India. I built the sales, marketing, and events program from zero for its flagship U.S. location inside Mall of America, with no inherited process or team, coordinating daily with IT, Operations, and Marketing teams based in India, across time zones and reporting lines I did not control.</p>
+      <div class="twin-stats">
+        <span class="twin-stat">200 events/year</span>
+        <span class="twin-stat">4 pro sports partnerships</span>
+        <span class="twin-stat">40M+ visitor reach via MOA</span>
+      </div>
+    </div>
+  </div>
+  <div class="insight-card">
+    <p class="insight-label">Why this matters for Milwaukee</p>
+    <p class="insight-text">The grand opening of your Milwaukee CxC is not a hypothetical for me. It is a pattern I have already run twice: once translating architectural blueprints into a working guest experience before a single customer walked through the door, and once building an entire program from nothing while staying aligned with a headquarters overseas. <strong>This is not new territory. It is a pattern I already know how to run.</strong></p>
+  </div>
+</section>
+
+<section class="slide slide-elevate" id="slide-3">
+  <p class="slide-label">Elevating, Enhancing, and Expanding What Already Exists</p>
+  <h2 class="section-headline">Opening a space is one skill.<br>Elevating one is <span>another.</span></h2>
+  <p class="section-sub">Rockwell's CxC network will need both, the ability to launch new spaces and the ability to grow, enhance, and expand what is already running.</p>
+  <div class="elevate-grid">
+    <div>
+      <ul class="elevate-list">
+        <li class="elevate-item">
+          <span class="elevate-num">01</span>
+          <span class="elevate-text"><strong>Looked past the surface.</strong> Inherited two established premium venues in Texas and identified untapped opportunity in food and beverage, pre and post-event programming, and partner activation.</span>
+        </li>
+        <li class="elevate-item">
+          <span class="elevate-num">02</span>
+          <span class="elevate-text"><strong>Built net-new revenue, not just better service.</strong> Created new revenue streams, including parking packages and club access tiers, and activated partner integrations tailored to each event's audience.</span>
+        </li>
+        <li class="elevate-item">
+          <span class="elevate-num">03</span>
+          <span class="elevate-text"><strong>Changed the physical space itself.</strong> Made structural changes to premium areas to optimize guest flow and service efficiency, the same "customer flow" and "positive disruption" language in your job description.</span>
+        </li>
+        <li class="elevate-item">
+          <span class="elevate-num">04</span>
+          <span class="elevate-text"><strong>The result showed up in the numbers.</strong> Contributed directly to the highest-grossing event night in the venue's history, while operating as a player-coach hiring and developing the team executing it.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="stat-tower">
+      <div class="stat-row"><span class="stat-num">2</span><span class="stat-label">Texas venues turned around at once</span></div>
+      <div class="stat-row"><span class="stat-num">150+</span><span class="stat-label">events per year across both venues</span></div>
+      <div class="stat-row"><span class="stat-num">$500K</span><span class="stat-label">annual operating budget managed</span></div>
+      <div class="stat-row"><span class="stat-num">12</span><span class="stat-label">person team hired and developed</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-global" id="slide-4">
+  <p class="slide-label">Consistency and Individualization, at the Same Time</p>
+  <h2 class="section-headline">Global standards still need a<br><span>local, individual</span> touch.</h2>
+  <p class="section-sub">A playbook keeps a brand consistent. Individualization is what makes each customer feel like the experience was built for them, not just delivered to them. A global CxC network needs both running at once, and that balance is where I have spent my career.</p>
+  <div class="global-grid">
+    <div class="global-card">
+      <p class="global-loc">India to Minnesota</p>
+      <h3 class="global-title">SMAAASH Entertainment</h3>
+      <p class="global-body">Coordinated daily with IT, Operations, and Marketing teams based at the company's India headquarters to launch and operate a flagship U.S. property, adapting a global standard to a market and audience the headquarters team had never worked in directly.</p>
+    </div>
+    <div class="global-card">
+      <p class="global-loc">Enterprise Insurance SaaS</p>
+      <h3 class="global-title">State National (Markel)</h3>
+      <p class="global-body">Built executive trust across 21 enterprise credit unions individually, no two accounts managed quite the same way, growing ARR 120% while holding 100% retention.</p>
+    </div>
+    <div class="global-card">
+      <p class="global-loc">SaaS HRIS</p>
+      <h3 class="global-title">Paycom</h3>
+      <p class="global-body">Managed a 90-account portfolio at 98% retention and 164% of target, building governance frameworks flexible enough to fit accounts ranging from 50 to 1,500 employees.</p>
+    </div>
+  </div>
+  <div class="insight-card">
+    <p class="insight-label">The instinct behind it</p>
+    <p class="insight-text">Standardize the parts that should feel consistent. Individualize the parts that make someone feel seen. <strong>That balance, not just consistency alone, is what turns a global experience program into one people actually remember.</strong></p>
+  </div>
+</section>
+
+<section class="slide slide-gaps" id="slide-5">
+  <p class="slide-label">Questions I'd Ask, and What I'd Bring Either Way</p>
+  <h2 class="gaps-headline">A few things worth exploring<br>together, and what I would <span>bring to them.</span></h2>
+  <p class="gaps-sub">I do not know Rockwell's CxC program from the inside yet, so I want to be upfront: these are potential gaps and open questions I would ask about in the first 90 days, not confirmed facts. Here is what I would already bring to each, in case they turn out to be true.</p>
+  <div class="gap-stack">
+    <div class="gap-card">
+      <p class="gap-title"><span>01 ·</span> How is a CxC visit's commercial impact measured today?</p>
+      <p class="gap-body">I would want to understand how a visit currently connects to pipeline movement and close rate. If that connective tissue is still being built, I would bring the same reporting discipline I used to grow a $7.14M portfolio to $15.71M and defend that growth in front of executive stakeholders every quarter.</p>
+    </div>
+    <div class="gap-card">
+      <p class="gap-title"><span>02 ·</span> How mature is AI-augmented personalization in the program today?</p>
+      <p class="gap-body">The posting asks the team to continuously evaluate emerging technologies and immersive experiences. I would want to know where that evaluation stands today. Either way, I already use AI daily to research accounts, draft briefs and talking points, and personalize outreach at scale, so I could start applying it to how each visit is planned and followed up on right away.</p>
+    </div>
+    <div class="gap-card">
+      <p class="gap-title"><span>03 ·</span> Is there a shared playbook for Partner Customer Experience Centers yet?</p>
+      <p class="gap-body">The role spans Partner CxCs at non-Rockwell-operated facilities. I would want to know whether a shared governance playbook already exists for those partner-run spaces. If it is still being built, I have done that work before, securing and maintaining four professional sports franchise partnerships from scratch at SMAAASH, and managing vendor contracts and brand standards across externally operated spaces at Live Nation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide slide-close" id="slide-6">
+  <p class="slide-label">Why This, Why Me</p>
+  <h2 class="close-headline">Built for the opening.<br>Ready for <span>Milwaukee.</span></h2>
+  <div class="close-grid">
+    <div>
+      <p class="close-col-title">What I bring to this role</p>
+      <div class="close-item"><div class="close-dot"></div><div class="close-text"><strong>14+ years</strong> building premium, executive-facing environments from the ground up, across live entertainment, sports, and enterprise SaaS</div></div>
+      <div class="close-item"><div class="close-dot"></div><div class="close-text"><strong>Two ground-up experience programs</strong>, one designed from architectural blueprints, one built from zero, both live before a single customer ever walked in</div></div>
+      <div class="close-item"><div class="close-dot"></div><div class="close-text"><strong>Cross-border execution</strong>, coordinating daily with a headquarters in India while operating with no direct authority over those teams</div></div>
+      <div class="close-item"><div class="close-dot"></div><div class="close-text"><strong>Enterprise account discipline</strong>, over 5 years managing complex B2B portfolios in highly regulated, compliance-rich industries</div></div>
+    </div>
+    <div>
+      <p class="close-col-title">What makes me different</p>
+      <div class="close-item"><div class="close-dot"></div><div class="close-text"><strong>I read the job description like an account plan.</strong> Every pillar in your posting has a matching proof point in my career, not a stretch.</div></div>
+      <div class="close-item"><div class="close-dot"></div><div class="close-text"><strong>I looked for open questions before being asked to.</strong> Attribution, AI-augmented personalization, and partner governance are things I would ask about on day one, and already have real experience to offer.</div></div>
+      <div class="close-item"><div class="close-dot"></div><div class="close-text"><strong>I am already in Milwaukee.</strong> The hybrid schedule and the Q2 FY27 grand opening timeline are not logistics I need to solve. They are simply where I already am.</div></div>
+      <div class="close-item"><div class="close-dot"></div><div class="close-text"><strong>I have done this without a title for it.</strong> Every company I have worked for called this job something different. Rockwell is the first to name it correctly.</div></div>
+    </div>
+  </div>
+  <div class="close-bottom">
+    <p class="close-quote">"I do not need to imagine what it takes to build an experience before a single customer arrives. I have already done it twice."</p>
+    <div class="close-contact">
+      <a href="mailto:bichanich@uwalumni.com">&#9993; bichanich@uwalumni.com</a>
+      <a href="tel:4143795966">&#9742; 414-379-5966</a>
+      <a href="https://linkedin.com/in/erin-gonzalez" target="_blank">&#8599; linkedin.com/in/erin-gonzalez</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots   = document.querySelectorAll('.nav-dot');
+  function goTo(i) { slides[i].scrollIntoView({ behavior: 'smooth' }); }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const i = Array.from(slides).indexOf(entry.target);
+        dots.forEach((d, j) => d.classList.toggle('active', i === j));
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
